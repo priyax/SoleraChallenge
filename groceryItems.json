@@ -1,0 +1,18 @@
+ [
+    {"name": "Peas: $ 0,95 per bag",
+    "price": 0.95,
+    "qty": 0 },
+    
+    {"name": "Eggs: $ 2,10 per dozen",
+    "price": 2.10,
+    "qty": 0 },
+    
+    {"name": "Milk: $ 1,30 per bottle",
+    "price": 1.30 ,
+    "qty": 0 },
+    
+    {"name": "Beans: $ 0,73 per can",
+    "price": 0.73 ,
+    "qty": 0 }
+  
+  ]
