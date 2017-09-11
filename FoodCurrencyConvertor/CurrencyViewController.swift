@@ -28,11 +28,15 @@ class CurrencyViewController: UIViewController {
   var groceryList = [GroceryItem]()
   
   
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.delegate = self
     currencyPicker.delegate = self
-    loadGroceryList()
+    //loadGroceryList()
+    GroceryManager.sharedInstance.loadGroceries(completion: { list in
+    self.groceryList = list } )
     loadCurrencyData()
     
     //Get current conversion rates from API when app returns from background
@@ -73,106 +77,27 @@ class CurrencyViewController: UIViewController {
     let result = String(format: " %.2f", checkoutTotalUSD * currencyMultiplier) + "  " + selectedCurrency
     return result
   }
-  
-  // Read file from main bundle
-  
-  func readFileFromResources(fileName: String, fileType: String, encoding: String.Encoding = String.Encoding.utf8) -> String {
-    
-    let absoluteFilePath = Bundle.main.path(forResource: fileName, ofType: fileType)
-    
-    if let absoluteFilePath = absoluteFilePath {
-      
-      if let fileData = try? Data.init(contentsOf: URL(fileURLWithPath: absoluteFilePath)) {
-        
-        if let fileAsString = NSString(data: fileData, encoding: encoding.rawValue) {
-          return fileAsString as String
-        } else {
-          print("readFileFromResources failed on: \(fileName). Failed to convert data to String!")
-          return  ""
-        }
-        
-      } else {
-        print("readFileFromResources failed on: \(fileName). Failed to load any data!")
-        return  ""
-      }
-    }
-    
-    print("readFileFromResources failed on: \(fileName). File does not exist!")
-    return  ""
-  }
-  
-  //loadGroceryList from JSON file
-  
-  func loadGroceryList() {
-    
-    let jsonString = readFileFromResources(fileName: "groceryItems", fileType: ".json")
-    let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-    
-    do {
-      let groceryArray = try JSONSerialization.jsonObject(with:jsonData, options: []) as! NSArray
-      
-      for item in groceryArray {
-        let itemDictionary = item as! NSDictionary
-        let name = itemDictionary["name"] as! String
-        let price = itemDictionary["price"] as! Float
-        let qty = itemDictionary["qty"] as! Int
-        
-        groceryList.append(GroceryItem(name: name, price: price, qty: qty))
-      }
-    } catch {
-      print("Serialization error")
-    }
-  }
+ 
   
   //gets updated currency list
   
-  func loadCurrencyData() {
-    
-    let url = URL(string: "http://www.apilayer.net/api/live?access_key=1d5f49755791b82322fc09165b2f1f97&currencies=AUD,CHF,EUR,GBP,PLN,INR&format=1")!
-    
-    let session = URLSession.shared
-    
-    let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
-      
-      if error == nil {
-        
-        do {
-          let jsonDict = try JSONSerialization.jsonObject(with: data!, options: [] ) as! NSDictionary
-          
-          let source = (jsonDict["source"] as? String)!
-          print("source = \(source)")
-          
-          let quotesDict = (jsonDict["quotes"] as? NSDictionary)!
-          
-          
-          for (key, value) in quotesDict {
-            print("\(key as! String) = \(value as! Float)")
-            var key = key as! String
-            //Remove USD prefixes of currencies
-            key = key.replacingOccurrences(of: "USD", with: "")
-            self.currencyData.append(CurrencyExchangeRate(currency: key, rate: value as! Float))
-          }
-          
-          DispatchQueue.main.async {
-            self.currencyPicker.reloadAllComponents()
-          }
-          
-        } catch {
-          print("NSData or NSJSONSerialization Error: \(error)")
-        }
-        
-      } else {
-        print("NSURLSession Error: \(String(describing: error))")
-        let alertController = UIAlertController(title: "Network error", message: String(describing: error?.localizedDescription), preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
+  func loadCurrencyData()  {
+    ExchangeRateManager.sharedInstance.loadExchangeRate(completion: { rateData in
+      self.currencyData = rateData
+      DispatchQueue.main.async
+        {
+          self.currencyPicker.reloadAllComponents()
       }
+      
+    }, errorText: {error in
+      let alertController = UIAlertController(title: "Network error", message: String(describing: error), preferredStyle: .alert)
+      let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+      
+      alertController.addAction(cancelAction)
+      self.present(alertController, animated: true, completion: nil)
     })
-    
-    task.resume()
   }
+  
 }
 
 extension CurrencyViewController: UITableViewDataSource, UITableViewDelegate, GroceryCellDelegate {

@@ -18,6 +18,8 @@
 		01AD15431F28625400EA417A /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD15421F28625400EA417A /* GroceryItem.swift */; };
 		01AD15451F2864CA00EA417A /* CurrencyExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD15441F2864CA00EA417A /* CurrencyExchangeRate.swift */; };
 		01AD15471F2903D800EA417A /* groceryItems.json in Resources */ = {isa = PBXBuildFile; fileRef = 01AD15461F2903D800EA417A /* groceryItems.json */; };
+		01C694201F2FA8A6006E791F /* GroceryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C6941F1F2FA8A6006E791F /* GroceryManager.swift */; };
+		01C694231F324F3D006E791F /* ExchangeRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C694221F324F3D006E791F /* ExchangeRateManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		01AD15421F28625400EA417A /* GroceryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		01AD15441F2864CA00EA417A /* CurrencyExchangeRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyExchangeRate.swift; sourceTree = "<group>"; };
 		01AD15461F2903D800EA417A /* groceryItems.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = groceryItems.json; path = ../groceryItems.json; sourceTree = "<group>"; };
+		01C6941F1F2FA8A6006E791F /* GroceryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroceryManager.swift; path = FoodCurrencyConvertor/GroceryManager.swift; sourceTree = "<group>"; };
+		01C694221F324F3D006E791F /* ExchangeRateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRateManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +93,7 @@
 			children = (
 				01AD151C1F26772200EA417A /* AppDelegate.swift */,
 				01AD151E1F26772200EA417A /* CurrencyViewController.swift */,
-				01AD15461F2903D800EA417A /* groceryItems.json */,
+				01C694211F32413D006E791F /* ModelController */,
 				01AD15401F2861E500EA417A /* Data Objects */,
 				01AD15201F26772200EA417A /* Main.storyboard */,
 				01AD15231F26772300EA417A /* Assets.xcassets */,
@@ -112,6 +116,7 @@
 		01AD15401F2861E500EA417A /* Data Objects */ = {
 			isa = PBXGroup;
 			children = (
+				01AD15461F2903D800EA417A /* groceryItems.json */,
 				01AD15421F28625400EA417A /* GroceryItem.swift */,
 				01AD15441F2864CA00EA417A /* CurrencyExchangeRate.swift */,
 			);
@@ -125,6 +130,16 @@
 				01AD152E1F26783800EA417A /* GroceryCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		01C694211F32413D006E791F /* ModelController */ = {
+			isa = PBXGroup;
+			children = (
+				01C6941F1F2FA8A6006E791F /* GroceryManager.swift */,
+				01C694221F324F3D006E791F /* ExchangeRateManager.swift */,
+			);
+			name = ModelController;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,9 +250,11 @@
 			files = (
 				01AD15451F2864CA00EA417A /* CurrencyExchangeRate.swift in Sources */,
 				01AD151F1F26772200EA417A /* CurrencyViewController.swift in Sources */,
+				01C694201F2FA8A6006E791F /* GroceryManager.swift in Sources */,
 				01AD151D1F26772200EA417A /* AppDelegate.swift in Sources */,
 				01AD15311F26934D00EA417A /* GroceryCellDelegate.swift in Sources */,
 				01AD15431F28625400EA417A /* GroceryItem.swift in Sources */,
+				01C694231F324F3D006E791F /* ExchangeRateManager.swift in Sources */,
 				01AD152F1F26783800EA417A /* GroceryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +474,7 @@
 				01AD153F1F2851AA00EA417A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
